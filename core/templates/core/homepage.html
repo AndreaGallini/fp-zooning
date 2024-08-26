@@ -1,0 +1,48 @@
+<!-- myapp/templates/myapp/home.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Nazioni</title>
+</head>
+
+<body>
+    <h1>Inserisci i Dati</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salva</button>
+    </form>
+
+    <h2>Group 1 (Totale: {{ group_1_total }})</h2>
+    <ul>
+        {% for item in group_1_data %}
+        <li>{{ item.nation_name }}: {{ item.total }}</li>
+        {% empty %}
+        <li>Nessun dato disponibile per questo gruppo.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Group 2 (Totale: {{ group_2_total }})</h2>
+    <ul>
+        {% for item in group_2_data %}
+        <li>{{ item.nation_name }}: {{ item.total }}</li>
+        {% empty %}
+        <li>Nessun dato disponibile per questo gruppo.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Group 3 (Totale: {{ group_3_total }})</h2>
+    <ul>
+        {% for item in group_3_data %}
+        <li>{{ item.nation_name }}: {{ item.total }}</li>
+        {% empty %}
+        <li>Nessun dato disponibile per questo gruppo.</li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
