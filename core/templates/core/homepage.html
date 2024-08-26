@@ -5,44 +5,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Nazioni</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <title>Zooning Postale Nazioni</title>
 </head>
+<style>
+    * {
+        font-family: "Poppins", sans-serif;
+        background-color: rgb(242, 242, 242);
+    }
+
+    .titolo {
+        font-size: 50px;
+        text-align: center;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container_zone {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+    }
+
+    p {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 300px;
+        overflow: hidden;
+    }
+
+    p select {
+        width: 250px;
+        border-radius: 30px;
+        padding: 5px 10px;
+        border: 1px solid black;
+    }
+
+    p input {
+        width: 250px;
+        border-radius: 30px;
+        padding: 5px 10px;
+        border: 1px solid black;
+    }
+
+    form {
+        text-align: center;
+    }
+
+    button {
+        border: 1px solid black;
+        border-radius: 30px;
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color: rgb(219, 219, 219);
+    }
+
+    button:hover {
+        background-color: green;
+        color: white;
+        border: 1px solid white;
+        transition: all 0.3s ease;
+    }
+
+    .delete {
+        border: 1px solid black;
+        border-radius: 30px;
+        padding: 10px 20px;
+        cursor: pointer;
+        text-decoration: none;
+        color: black;
+        background-color: rgb(219, 219, 219);
+    }
+
+    .delete:hover {
+        background-color: red;
+        color: white;
+        border: 1px solid white;
+        transition: all 0.3s ease;
+    }
+
+    h3 {
+        font-size: 25px;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    ul {
+        padding: 0;
+    }
+</style>
 
 <body>
-    <h1>Inserisci i Dati</h1>
+    <div class="container">
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Salva</button>
-    </form>
 
-    <h2>Group 1 (Totale: {{ group_1_total }}).</h2>
-    <ul>
-        {% for item in group_1_data %}
-        <li>{{ item.nation_name }}: {{ item.total }}</li>
-        {% empty %}
-        <li>Nessun dato disponibile per questo gruppo.</li>
-        {% endfor %}
-    </ul>
+        <h1 class="titolo">Inserisci i Dati</h1>
+        <a href="{% url 'delete_all_data' %}" class="delete"
+            onclick="return confirm('Sei sicuro di voler cancellare tutti i dati?');">Cancella
+            tutti i dati</a>
 
-    <h2>Group 2 (Totale: {{ group_2_total }})</h2>
-    <ul>
-        {% for item in group_2_data %}
-        <li>{{ item.nation_name }}: {{ item.total }}</li>
-        {% empty %}
-        <li>Nessun dato disponibile per questo gruppo.</li>
-        {% endfor %}
-    </ul>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Aggiorna</button>
 
-    <h2>Group 3 (Totale: {{ group_3_total }})</h2>
-    <ul>
-        {% for item in group_3_data %}
-        <li>{{ item.nation_name }}: {{ item.total }}</li>
-        {% empty %}
-        <li>Nessun dato disponibile per questo gruppo.</li>
-        {% endfor %}
-    </ul>
+        </form>
+        <div class="container_zone">
+            <div>
+                <h3>Zona 1 (Totale: {{ group_1_total }})</h3>
+                <p>Elenco nazioni</p>
+                <ul>
+
+                    {% for item in group_1_data %}
+                    <li>{{ item.nation_name }}: {{ item.total }}</li>
+                    {% empty %}
+                    <li>Nessuna nazione ancora aggiunta</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <h3>Zona 2 (Totale: {{ group_2_total }})</h3>
+                <p>Elenco nazioni</p>
+                <ul>
+                    {% for item in group_2_data %}
+                    <li>{{ item.nation_name }}: {{ item.total }}</li>
+                    {% empty %}
+                    <li>Nessuna nazione ancora aggiunta</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <h3>Zona 3 (Totale: {{ group_3_total }})</h3>
+                <p>Elenco nazioni</p>
+                <ul>
+                    {% for item in group_3_data %}
+                    <li>{{ item.nation_name }}: {{ item.total }}</li>
+                    {% empty %}
+                    <li>Nessuna nazione ancora aggiunta</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
