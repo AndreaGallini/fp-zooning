@@ -85,6 +85,24 @@
         transition: all 0.3s ease;
     }
 
+    .btn {
+        border: 1px solid black;
+        margin-top: 50px;
+        border-radius: 30px;
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color: rgb(219, 219, 219);
+        text-decoration: none;
+        color: black;
+    }
+
+    .btn:hover {
+        background-color: green;
+        color: white;
+        border: 1px solid white;
+        transition: all 0.3s ease;
+    }
+
     .delete {
         border: 1px solid black;
         border-radius: 30px;
@@ -134,6 +152,7 @@
             <button type="submit">Aggiorna</button>
 
         </form>
+        <a href="{% url 'export_data' %}" class="btn">Esporta Dati</a>
         <div class="container_zone">
             <div>
                 <p>Prezzo cad.</p>
