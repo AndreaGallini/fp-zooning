@@ -34,6 +34,7 @@
         display: flex;
         justify-content: space-around;
         text-align: center;
+        flex-wrap: nowrap;
     }
 
     p {
@@ -53,6 +54,13 @@
 
     p input {
         width: 250px;
+        border-radius: 30px;
+        padding: 5px 10px;
+        border: 1px solid black;
+    }
+
+    input {
+        width: 80px;
         border-radius: 30px;
         padding: 5px 10px;
         border: 1px solid black;
@@ -105,6 +113,10 @@
     ul {
         padding: 0;
     }
+
+    .result {
+        text-align: left !important;
+    }
 </style>
 
 <body>
@@ -124,7 +136,17 @@
         </form>
         <div class="container_zone">
             <div>
+                <p>Prezzo cad.</p>
+                <input type="number" id="costozona1">
+                <button class="btn" id="calcolozona1">Calcola</button>
+                <div class="result">
+                    <p id="result1"></p>
+                    <p id="result1iva"></p>
+                    <p id="result1ivato"></p>
+                </div>
+
                 <h3>Zona 1 (Totale: {{ group_1_total }})</h3>
+                <span id="group1Total" style="display: none;">{{ group_1_total }}</span>
                 <p>Elenco nazioni</p>
                 <ul>
 
@@ -135,8 +157,18 @@
                     {% endfor %}
                 </ul>
             </div>
+
             <div>
+                <p>Prezzo cad.</p>
+                <input type="number" id="costozona2">
+                <button class="btn" id="calcolozona2">Calcola</button>
+                <div class="resul2">
+                    <p id="result2"></p>
+                    <p id="result2iva"></p>
+                    <p id="result2ivato"></p>
+                </div>
                 <h3>Zona 2 (Totale: {{ group_2_total }})</h3>
+                <span id="group2Total" style="display: none;">{{ group_2_total }}</span>
                 <p>Elenco nazioni</p>
                 <ul>
                     {% for item in group_2_data %}
@@ -146,8 +178,18 @@
                     {% endfor %}
                 </ul>
             </div>
+
             <div>
+                <p>Prezzo cad.</p>
+                <input type="number" id="costozona3">
+                <button class="btn" id="calcolozona3">Calcola</button>
+                <div class="resul3">
+                    <p id="result3"></p>
+                    <p id="result3iva"></p>
+                    <p id="result3ivato"></p>
+                </div>
                 <h3>Zona 3 (Totale: {{ group_3_total }})</h3>
+                <span id="group3Total" style="display: none;">{{ group_3_total }}</span>
                 <p>Elenco nazioni</p>
                 <ul>
                     {% for item in group_3_data %}
@@ -157,8 +199,94 @@
                     {% endfor %}
                 </ul>
             </div>
-        </div>
-    </div>
+
+
 </body>
+<script>
+    document.getElementById('calcolozona1').addEventListener('click', function () {
+        // Ottieni il valore del campo costo e sostituisci la virgola con un punto
+        let costo = parseFloat(document.getElementById('costozona1').value.replace(',', '.'));
+
+        // Ottieni il valore di group1Total come numero (decimale)
+        var group1Total = parseFloat(document.getElementById('group1Total').textContent);
+
+        // Calcola il totale
+        let totale = group1Total * costo;
+
+        // Trova l'elemento in cui mostrare il risultato
+        let resultzona1 = document.getElementById('result1');
+        let resultzona1iva = document.getElementById('result1iva');
+        let resultzona1ivato = document.getElementById('result1ivato');
+
+        let percentuale = 22 / 100;
+        let iva = totale * percentuale;
+        let totaleivato = totale + iva
+        // Debugging: stampa i valori nella console
+        console.log("Costo:", costo);
+        console.log("Group 1 Total:", group1Total);
+        console.log("Totale:", totale);
+
+        // Mostra il risultato nel campo di output
+        resultzona1.innerText = totale.toFixed(2) + '€ Es. Iva';
+        result1iva.innerText = iva.toFixed(2) + '€ di Iva';
+        resultzona1ivato.innerText = totaleivato.toFixed(2) + '€ Iva compresa';
+    });
+    document.getElementById('calcolozona2').addEventListener('click', function () {
+        // Ottieni il valore del campo costo e sostituisci la virgola con un punto
+        let costo = parseFloat(document.getElementById('costozona2').value.replace(',', '.'));
+
+        // Ottieni il valore di group1Total come numero (decimale)
+        var group2Total = parseFloat(document.getElementById('group2Total').textContent);
+
+        // Calcola il totale
+        let totale = group2Total * costo;
+
+        // Trova l'elemento in cui mostrare il risultato
+        let resultzona1 = document.getElementById('result2');
+        let resultzona1iva = document.getElementById('result2iva');
+        let resultzona1ivato = document.getElementById('result2ivato');
+
+        let percentuale = 22 / 100;
+        let iva = totale * percentuale;
+        let totaleivato = totale + iva
+        // Debugging: stampa i valori nella console
+        console.log("Costo:", costo);
+        console.log("Group 2 Total:", group2Total);
+        console.log("Totale:", totale);
+
+        // Mostra il risultato nel campo di output
+        resultzona1.innerText = totale.toFixed(2) + '€ Es. Iva';
+        resultzona1iva.innerText = iva.toFixed(2) + '€ di Iva';
+        resultzona1ivato.innerText = totaleivato.toFixed(2) + '€ Iva compresa';
+    });
+    document.getElementById('calcolozona3').addEventListener('click', function () {
+        // Ottieni il valore del campo costo e sostituisci la virgola con un punto
+        let costo = parseFloat(document.getElementById('costozona3').value.replace(',', '.'));
+
+        // Ottieni il valore di group1Total come numero (decimale)
+        var group1Total = parseFloat(document.getElementById('group3Total').textContent);
+
+        // Calcola il totale
+        let totale = group1Total * costo;
+
+        // Trova l'elemento in cui mostrare il risultato
+        let resultzona1 = document.getElementById('result3');
+        let resultzona1iva = document.getElementById('result3iva');
+        let resultzona1ivato = document.getElementById('result3ivato');
+
+        let percentuale = 22 / 100;
+        let iva = totale * percentuale;
+        let totaleivato = totale + iva
+        // Debugging: stampa i valori nella console
+        console.log("Costo:", costo);
+        console.log("Group 1 Total:", group1Total);
+        console.log("Totale:", totale);
+
+        // Mostra il risultato nel campo di output
+        resultzona1.innerText = totale.toFixed(2) + '€ Es. Iva';
+        resultzona1iva.innerText = iva.toFixed(2) + '€ di Iva';
+        resultzona1ivato.innerText = totaleivato.toFixed(2) + '€ Iva compresa';
+    });
+</script>
 
 </html>
