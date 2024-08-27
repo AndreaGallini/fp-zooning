@@ -7,6 +7,9 @@ from django.shortcuts import render, redirect
 from django.db.models import Sum
 from .forms import InputDataForm
 from .models import InputData
+import os
+from django.http import HttpResponse
+from django.utils.text import slugify
 
 def home(request):
     if request.method == 'POST':
@@ -63,3 +66,42 @@ def home(request):
 def delete_all_data(request):
     InputData.objects.all().delete()
     return redirect('home')  # Reindirizza alla homepage dopo la cancellazione
+
+
+def export_data(request):
+    # Raggruppa i dati per zona
+    group_1_data = InputData.objects.filter(group='Group 1')
+    group_2_data = InputData.objects.filter(group='Group 2')
+    group_3_data = InputData.objects.filter(group='Group 3')
+
+    lines = []
+
+    # Zona 1
+    lines.append("Zona 1:\n")
+    for item in group_1_data:
+        lines.append(f"{item.nation_name}: {item.number}\n")
+
+    # Aggiungi una linea vuota per separare le zone
+    lines.append("\n")
+
+    # Zona 2
+    lines.append("Zona 2:\n")
+    for item in group_2_data:
+        lines.append(f"{item.nation_name}: {item.number}\n")
+
+    # Aggiungi una linea vuota per separare le zone
+    lines.append("\n")
+
+    # Zona 3
+    lines.append("Zona 3:\n")
+    for item in group_3_data:
+        lines.append(f"{item.nation_name}: {item.number}\n")
+
+    # Unisci le linee in un unico contenuto
+    content = ''.join(lines)
+
+    # Prepara la risposta HTTP per il download del file
+    response = HttpResponse(content, content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename="exported_data.txt"'
+
+    return response
